@@ -35,6 +35,8 @@
             this.LauncherPictureBox = new Guna.UI2.WinForms.Guna2PictureBox();
             this.SettingsPictureBox = new Guna.UI2.WinForms.Guna2PictureBox();
             this.FortnitePathButton = new Guna.UI2.WinForms.Guna2Button();
+            this.FortnitePath = new Guna.UI2.WinForms.Guna2HtmlLabel();
+            this.DiscordButton = new Guna.UI2.WinForms.Guna2Button();
             this.MainPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ExitPictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.LauncherPictureBox)).BeginInit();
@@ -93,7 +95,7 @@
             // 
             this.LauncherPictureBox.Image = ((System.Drawing.Image)(resources.GetObject("LauncherPictureBox.Image")));
             this.LauncherPictureBox.ImageRotate = 0F;
-            this.LauncherPictureBox.Location = new System.Drawing.Point(-53, -31);
+            this.LauncherPictureBox.Location = new System.Drawing.Point(-60, -35);
             this.LauncherPictureBox.Name = "LauncherPictureBox";
             this.LauncherPictureBox.Size = new System.Drawing.Size(259, 133);
             this.LauncherPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -127,11 +129,43 @@
             this.FortnitePathButton.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(72)))), ((int)(((byte)(92)))));
             this.FortnitePathButton.Font = new System.Drawing.Font("Arial Black", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FortnitePathButton.ForeColor = System.Drawing.Color.White;
-            this.FortnitePathButton.Location = new System.Drawing.Point(16, 378);
+            this.FortnitePathButton.Location = new System.Drawing.Point(16, 372);
             this.FortnitePathButton.Name = "FortnitePathButton";
             this.FortnitePathButton.Size = new System.Drawing.Size(342, 41);
             this.FortnitePathButton.TabIndex = 63;
             this.FortnitePathButton.Text = "Select Fortnite Path";
+            this.FortnitePathButton.Click += new System.EventHandler(this.FortnitePathButton_Click);
+            // 
+            // FortnitePath
+            // 
+            this.FortnitePath.BackColor = System.Drawing.Color.Transparent;
+            this.FortnitePath.Font = new System.Drawing.Font("Arial Black", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.FortnitePath.ForeColor = System.Drawing.SystemColors.Control;
+            this.FortnitePath.Location = new System.Drawing.Point(16, 105);
+            this.FortnitePath.Name = "FortnitePath";
+            this.FortnitePath.Size = new System.Drawing.Size(340, 19);
+            this.FortnitePath.TabIndex = 64;
+            this.FortnitePath.Text = "DON\'T DELETE THIS LABEL (used for Fortnite path)\r\n";
+            this.FortnitePath.Visible = false;
+            // 
+            // DiscordButton
+            // 
+            this.DiscordButton.BorderRadius = 5;
+            this.DiscordButton.BorderStyle = System.Drawing.Drawing2D.DashStyle.Custom;
+            this.DiscordButton.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.DiscordButton.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.DiscordButton.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.DiscordButton.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.DiscordButton.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.DiscordButton.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(75)))), ((int)(((byte)(64)))), ((int)(((byte)(116)))));
+            this.DiscordButton.Font = new System.Drawing.Font("Arial Black", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.DiscordButton.ForeColor = System.Drawing.Color.White;
+            this.DiscordButton.Location = new System.Drawing.Point(16, 319);
+            this.DiscordButton.Name = "DiscordButton";
+            this.DiscordButton.Size = new System.Drawing.Size(342, 41);
+            this.DiscordButton.TabIndex = 65;
+            this.DiscordButton.Text = "Discord";
+            this.DiscordButton.Click += new System.EventHandler(this.DiscordButton_Click);
             // 
             // Launcher
             // 
@@ -139,6 +173,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(54)))), ((int)(((byte)(95)))));
             this.ClientSize = new System.Drawing.Size(370, 481);
+            this.Controls.Add(this.DiscordButton);
+            this.Controls.Add(this.FortnitePath);
             this.Controls.Add(this.FortnitePathButton);
             this.Controls.Add(this.MainPanel);
             this.Controls.Add(this.LaunchButton);
@@ -148,12 +184,15 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Launcher";
             this.Load += new System.EventHandler(this.Launcher_Load);
+            this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Launcher_MouseDown);
+            this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Launcher_MouseMove);
             this.MouseUp += new System.Windows.Forms.MouseEventHandler(this.Launcher_MouseUp);
             this.MainPanel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.ExitPictureBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.LauncherPictureBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.SettingsPictureBox)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -165,6 +204,8 @@
         private Guna.UI2.WinForms.Guna2PictureBox SettingsPictureBox;
         private Guna.UI2.WinForms.Guna2Button FortnitePathButton;
         private Guna.UI2.WinForms.Guna2PictureBox ExitPictureBox;
+        private Guna.UI2.WinForms.Guna2HtmlLabel FortnitePath;
+        private Guna.UI2.WinForms.Guna2Button DiscordButton;
     }
 }
 

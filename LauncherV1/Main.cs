@@ -1,10 +1,16 @@
-﻿using System;
+﻿using InjectLoadingTest;
+using InjectorTesting;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.IO;
 using System.Linq;
+using System.Net;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -24,10 +30,12 @@ namespace LauncherV1
         private Point mouseOffset;
         private bool isMouseDown = false;
         private bool isFadingOut = false;
+        private Timer buttonfadingredonlaunch;
 
         public Launcher()
         {
             InitializeComponent();
+            CloseLauncherProcessIfRequired();
             this.MouseDown += Launcher_MouseDown;
             this.MouseMove += Launcher_MouseMove;
             this.MouseUp += Launcher_MouseUp;
@@ -50,6 +58,16 @@ namespace LauncherV1
         {
             this.Opacity = 0;
             isFadingIn = true; // if this is false the GUI will not load!!!!! DON'T CHANGE THIS
+            if (!string.IsNullOrEmpty(Properties.Settings.Default.SelectedFolderPath))
+            {
+                FortnitePathButton.Text = "Change Fortnite Path";
+                FortnitePath.Text = $"Fortnite Path: {Properties.Settings.Default.SelectedFolderPath}";
+            }
+            else
+            {
+                FortnitePathButton.Text = "Select Fortnite Path";
+                FortnitePath.Text = "Fortnite Path";
+            }
         }
 
 
@@ -147,12 +165,309 @@ namespace LauncherV1
             isFadingOut = true;
         }
 
-
-        // so legit is has no features yet!
-        private void LaunchButton_Click(object sender, EventArgs e)
+        // Start on fortnite launching/closing
+        public static Process StartProcess(string path, bool shouldFreeze, string extraArgs = "")
         {
-            string update = "attempting to update";
-            Console.WriteLine(update);
+            Process process = new Process
+            {
+                StartInfo = new ProcessStartInfo
+                {
+                    FileName = path,
+                    Arguments = $"-epicapp=Fortnite -epicenv=Prod -epiclocale=en-us -epicportal -noeac -fromfl=be -fltoken=5dh74c635862g575778132fb -skippatchcheck" + extraArgs
+                }
+            };
+            process.Start();
+            if (shouldFreeze)
+            {
+                foreach (object obj in process.Threads)
+                {
+                    ProcessThread thread = (ProcessThread)obj;
+                    Win32.SuspendThread(Win32.OpenThread(2, false, thread.Id));
+                }
+            }
+            return process;
+        }
+
+        private void CloseLauncherProcessIfRequired()
+        {
+            if (LaunchButton.Text == "Launch")
+            {
+                Process[] launcherProcesses = Process.GetProcessesByName("FortniteLauncher");
+                foreach (Process launcherProcess in launcherProcesses)
+                {
+                    launcherProcess.Kill();
+                    CloseBEProcess();
+                    CloseFortniteProcess();
+                    IsEpicGamesLauncherRunning();
+                }
+            }
+        }
+
+        private void CloseBEProcess()
+        {
+            if (LaunchButton.Text == "Launch")
+            {
+                Process[] launcherProcesses = Process.GetProcessesByName("FortniteClient-Win64-Shipping_BE");
+                foreach (Process launcherProcess in launcherProcesses)
+                {
+                    launcherProcess.Kill();
+                    CloseBEProcess();
+                    CloseFortniteProcess();
+                    IsEpicGamesLauncherRunning();
+                }
+            }
+        }
+
+        private void CloseFortniteProcess()
+        {
+            if (LaunchButton.Text == "Launch")
+            {
+                Process[] launcherProcesses = Process.GetProcessesByName("FortniteClient-Win64-Shipping");
+                foreach (Process launcherProcess in launcherProcesses)
+                {
+                    launcherProcess.Kill();
+                    CloseBEProcess();
+                    CloseFortniteProcess();
+                }
+            }
+        }
+
+        private bool IsFortniteRunning()
+        {
+            Process[] processes = Process.GetProcessesByName("FortniteClient-Win64-Shipping");
+            return processes.Length > 0;
+        }
+
+        private void IsEpicGamesLauncherRunning()
+        {
+            if (LaunchButton.Text == "Launch")
+            {
+                Process[] launcherProcesses = Process.GetProcessesByName("EpicGamesLauncher");
+                foreach (Process launcherProcess in launcherProcesses)
+                {
+                    launcherProcess.Kill();
+                    CloseBEProcess();
+                    CloseFortniteProcess();
+                    IsEpicGamesLauncherRunning();
+                }
+            }
+        }
+        // End on fortnite launching/closing
+
+        // Start on Launching Fortnite
+        private async void LaunchButton_Click(object sender, EventArgs e)
+        {
+            LaunchButton.Text = "Fortnite is running";
+            FadeOnLaunch_Tick(null, null);
+            buttonfadingredonlaunch = new Timer();
+            buttonfadingredonlaunch.Interval = 75;
+            buttonfadingredonlaunch.Tick += FadeOnLaunch_Tick;
+            buttonfadingredonlaunch.Start();
+
+            if (IsFortniteRunning())
+            {
+                MessageBox.Show("Fortnite is already running. If you closed it, please restart the launcher.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                buttonfadingredonlaunch.Stop();
+                buttonfadingredonlaunch.Dispose();
+                return;
+            }
+
+            string clientPath = Path.Combine(Properties.Settings.Default.SelectedFolderPath, "FortniteGame\\Binaries\\Win64", game.ClientExecutable);
+            string[] requiredFiles = { game.dll, game.memory, game.console };
+
+            string launcherURL = "https://github.com/Therealsxlar/CycloServer-Dlls/raw/main/FortniteLauncher.exe";
+            string dllUrl = "https://github.com/Therealsxlar/CycloServer-Dlls/raw/main/CycloServer.dll";
+
+            string dllPath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "CycloServer.dll");
+
+            if (!File.Exists(dllPath))
+            {
+                DialogResult result = MessageBox.Show("Seems like the DLL is missing. Would you like to install it?", "DLL Missing", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (result == DialogResult.Yes)
+                {
+                    try
+                    {
+                        using (WebClient webClient = new WebClient())
+                        {
+                            await webClient.DownloadFileTaskAsync(dllUrl, dllPath);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Failed to download the required DLL: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        LaunchButton.Text = "Launch";
+                        return;
+                    }
+                }
+                else
+                {
+                    LaunchButton.Text = "Launch";
+                    return;
+                }
+            }
+
+            foreach (string file in requiredFiles)
+            {
+                string filePath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), file);
+                if (!File.Exists(filePath))
+                {
+                    MessageBox.Show($"\"{file}\" was not found. Please try again or reinstall the launcher.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    LaunchButton.Text = "Launch";
+                    return;
+                }
+            }
+
+            LaunchButton.Text = "Launched";
+
+            try
+            {
+                using (WebClient webClient = new WebClient())
+                {
+                    await webClient.DownloadFileTaskAsync(dllUrl, dllPath);
+                }
+
+                using (WebClient webClient = new WebClient())
+                {
+                    await webClient.DownloadFileTaskAsync(launcherURL, Path.Combine(Properties.Settings.Default.SelectedFolderPath, "FortniteGame\\Binaries\\Win64\\FortniteLauncher.exe.new"));
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Failed to download the required files: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                LaunchButton.Text = "Launch";
+                return;
+            }
+
+            try
+            {
+                File.Delete(Path.Combine(Properties.Settings.Default.SelectedFolderPath, "FortniteGame\\Binaries\\Win64\\FortniteLauncher.exe"));
+                File.Move(Path.Combine(Properties.Settings.Default.SelectedFolderPath, "FortniteGame\\Binaries\\Win64\\FortniteLauncher.exe.new"), Path.Combine(Properties.Settings.Default.SelectedFolderPath, "FortniteGame\\Binaries\\Win64\\FortniteLauncher.exe"));
+            }
+            catch (Exception ex)
+            {
+                LaunchButton.Text = "ERROR";
+                MessageBox.Show($"Please restart the launcher.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                LaunchButton.Text = "Launch";
+                return;
+            }
+
+            LaunchButton.Text = "Fortnite is running!";
+            await Task.Run(() =>
+            {
+                Process process = StartProcess(Path.Combine(Properties.Settings.Default.SelectedFolderPath, "FortniteGame\\Binaries\\Win64\\FortniteLauncher.exe"), true, "");
+                Process gameProcess = StartProcess(Path.Combine(Properties.Settings.Default.SelectedFolderPath, "FortniteGame\\Binaries\\Win64\\FortniteClient-Win64-Shipping_BE.exe"), true, "");
+
+                string email = "CycloServer-User@snows.rocks";
+                string password = "zzzzzzzzzzzzzzzz";
+
+                if (string.IsNullOrWhiteSpace(email) || !email.Contains("@"))
+                {
+                    MessageBox.Show("Invalid Email");
+                    CloseLauncherProcessIfRequired();
+                    CloseFortniteProcess();
+                    CloseBEProcess();
+                    IsEpicGamesLauncherRunning();
+                    return;
+                }
+
+                if (password.Length != 16)
+                {
+                    MessageBox.Show("Your Secret key is invalid.");
+                    CloseLauncherProcessIfRequired();
+                    CloseFortniteProcess();
+                    CloseBEProcess();
+                    IsEpicGamesLauncherRunning();
+                    return;
+                }
+
+                password = Uri.EscapeDataString(password);
+
+                Process authProcess = StartProcess(Path.Combine(Properties.Settings.Default.SelectedFolderPath, "FortniteGame\\Binaries\\Win64\\FortniteClient-Win64-Shipping.exe"), false, $"-AUTH_TYPE=epic -AUTH_LOGIN={email} -AUTH_PASSWORD={password}");
+
+                authProcess.WaitForInputIdle();
+
+                int processId = authProcess.Id;
+                foreach (string file in requiredFiles)
+                {
+                    string filePath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), file);
+                    inject.InjectDll(processId, Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), game.dll));
+                    System.Threading.Thread.Sleep(40000);
+                    inject.InjectDll(processId, Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), game.memory));
+                    System.Threading.Thread.Sleep(20000);
+                    inject.InjectDll(processId, Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), game.console));
+                }
+
+                authProcess.WaitForExit();
+            });
+
+            base.Show();
+            LaunchButton.Text = "Launch";
+        }
+
+        private void FadeOnLaunch_Tick(object sender, EventArgs e) // idek anymore this is to hard to do in C#
+        {
+            int speed = 100;
+            int targetR = 150;
+            int targetG = 0;
+            int targetB = 24;
+
+            if (LaunchButton.FillColor.R > targetR)
+                LaunchButton.FillColor = Color.FromArgb(Math.Max(LaunchButton.FillColor.R - speed, targetR), LaunchButton.FillColor.G, LaunchButton.FillColor.B);
+            else if (LaunchButton.FillColor.R < targetR)
+                LaunchButton.FillColor = Color.FromArgb(Math.Min(LaunchButton.FillColor.R + speed, targetR), LaunchButton.FillColor.G, LaunchButton.FillColor.B);
+            else if (LaunchButton.FillColor.G > targetG)
+                LaunchButton.FillColor = Color.FromArgb(LaunchButton.FillColor.R, Math.Max(LaunchButton.FillColor.G - speed, targetG), LaunchButton.FillColor.B);
+            else if (LaunchButton.FillColor.G < targetG)
+                LaunchButton.FillColor = Color.FromArgb(LaunchButton.FillColor.R, Math.Min(LaunchButton.FillColor.G + speed, targetG), LaunchButton.FillColor.B);
+            else if (LaunchButton.FillColor.B > targetB)
+                LaunchButton.FillColor = Color.FromArgb(LaunchButton.FillColor.R, LaunchButton.FillColor.G, Math.Max(LaunchButton.FillColor.B - speed, targetB));
+            else if (LaunchButton.FillColor.B < targetB)
+                LaunchButton.FillColor = Color.FromArgb(LaunchButton.FillColor.R, LaunchButton.FillColor.G, Math.Min(LaunchButton.FillColor.B + speed, targetB));
+
+            if (LaunchButton.FillColor.R == targetR && LaunchButton.FillColor.G == targetG && LaunchButton.FillColor.B == targetB)
+            {
+                LaunchButton.Text = "Fortnite is running!";
+                buttonfadingredonlaunch.Stop();
+                buttonfadingredonlaunch.Dispose();
+            }
+        }
+        // End on Launching Fortnite
+
+        private void FortnitePathButton_Click(object sender, EventArgs e)
+        {
+            using (FolderBrowserDialog folderBrowserDialog = new FolderBrowserDialog())
+            {
+                folderBrowserDialog.Description = "Make sure you select the folder containing the 'Engine' and 'FortniteGame' folders";
+                folderBrowserDialog.ShowNewFolderButton = false;
+                folderBrowserDialog.RootFolder = Environment.SpecialFolder.Desktop;
+                folderBrowserDialog.SelectedPath = Properties.Settings.Default.SelectedFolderPath;
+
+                DialogResult result = folderBrowserDialog.ShowDialog();
+
+                if (result == DialogResult.OK && !string.IsNullOrWhiteSpace(folderBrowserDialog.SelectedPath))
+                {
+                    if (Directory.Exists(Path.Combine(folderBrowserDialog.SelectedPath, "Engine")) &&
+                        Directory.Exists(Path.Combine(folderBrowserDialog.SelectedPath, "FortniteGame")))
+                    {
+                        Properties.Settings.Default.SelectedFolderPath = folderBrowserDialog.SelectedPath;
+                        Properties.Settings.Default.Save();
+                        FortnitePath.Text = folderBrowserDialog.SelectedPath;
+                        FortnitePathButton.Text = "Change Fortnite Path";
+                    }
+                    else
+                    {
+                        Properties.Settings.Default.SelectedFolderPath = "";
+                        FortnitePath.Text = "";
+                        MessageBox.Show("Hmm seems like the 'Engine' and 'FortniteGame' folders aren't found. Re-enter your path containing them.", "Retrac-Remake Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        FortnitePathButton.Text = "Select Fortnite Path";
+                    }
+                }
+            }
+        }
+
+        private void DiscordButton_Click(object sender, EventArgs e)
+        {
+            Process.Start("https://dsc.gg/sxlar");
         }
     }
 }
