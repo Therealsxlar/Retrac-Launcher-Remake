@@ -13,3 +13,5 @@
 - **Authenticating** (future things) prolly wont happen on this remake
 - **Backend support**
 - **Auto Updater**
+
+![image](https://cdn.discordapp.com/attachments/853697541706350632/1238692934178836571/image.png?ex=66403631&is=663ee4b1&hm=63fd3e5cf0a91592984bbaad2b87b9c5a7fc7ceb1a83f6b25a861765cd36f380&)
