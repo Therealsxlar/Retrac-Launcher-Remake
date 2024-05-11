@@ -4,14 +4,13 @@
 - This project is for educational purposes only.
 
 ## Features
-- **Uhh nothing yet**
+- [X] **Launching** (Automatically downloads a dll I made redirects to the port **3551**)
+- [X] **Selecting Fortnite Path**
+- [X] **Joining Discord with button**
 
 ## Todo
-- **Launching**
-- **Selecting Fortnite Path**
-- **Settings**
-- **Authenticating** (future things) prolly wont happen on this remake
-- **Backend support**
-- **Auto Updater**
+- [ ] **Settings**
+- [ ] **Authenticating** (future things) prolly wont happen on this remake
+- [ ] **Auto Updater**
 
 ![image](https://media.discordapp.net/attachments/853697541706350632/1238955594581409835/image-removebg-preview.png?ex=66412ad0&is=663fd950&hm=877d1f9b63f22fb96bb9ce31960b80bd7fc7546897de4655e26573ddbc6bdb70&=&format=webp&quality=lossless)
