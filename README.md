@@ -14,4 +14,4 @@
 - **Backend support**
 - **Auto Updater**
 
-![image](https://cdn.discordapp.com/attachments/853697541706350632/1238853478709985312/image-removebg-preview.png?ex=6640cbb6&is=663f7a36&hm=b2e99e80662d3864325345950f713d1de8f9766a6e541f39a00fc50ec673b27b&)
+![image](https://media.discordapp.net/attachments/853697541706350632/1238955594581409835/image-removebg-preview.png?ex=66412ad0&is=663fd950&hm=877d1f9b63f22fb96bb9ce31960b80bd7fc7546897de4655e26573ddbc6bdb70&=&format=webp&quality=lossless)
