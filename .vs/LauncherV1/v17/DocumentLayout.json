@@ -1,0 +1,70 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\O1ogr\\source\\repos\\LauncherV1\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{9DDC6FF0-E743-4518-9EE6-B63C259C27C9}|LauncherV1\\LauncherV1.csproj|c:\\users\\o1ogr\\source\\repos\\launcherv1\\launcherv1\\main.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{9DDC6FF0-E743-4518-9EE6-B63C259C27C9}|LauncherV1\\LauncherV1.csproj|solutionrelative:launcherv1\\main.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9DDC6FF0-E743-4518-9EE6-B63C259C27C9}|LauncherV1\\LauncherV1.csproj|c:\\users\\o1ogr\\source\\repos\\launcherv1\\launcherv1\\main.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9DDC6FF0-E743-4518-9EE6-B63C259C27C9}|LauncherV1\\LauncherV1.csproj|solutionrelative:launcherv1\\main.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9DDC6FF0-E743-4518-9EE6-B63C259C27C9}|LauncherV1\\LauncherV1.csproj|c:\\users\\o1ogr\\source\\repos\\launcherv1\\launcherv1\\main.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9DDC6FF0-E743-4518-9EE6-B63C259C27C9}|LauncherV1\\LauncherV1.csproj|solutionrelative:launcherv1\\main.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 2,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Main.Designer.cs",
+              "DocumentMoniker": "C:\\Users\\O1ogr\\source\\repos\\LauncherV1\\LauncherV1\\Main.Designer.cs",
+              "RelativeDocumentMoniker": "LauncherV1\\Main.Designer.cs",
+              "ToolTip": "C:\\Users\\O1ogr\\source\\repos\\LauncherV1\\LauncherV1\\Main.Designer.cs",
+              "RelativeToolTip": "LauncherV1\\Main.Designer.cs",
+              "ViewState": "AQIAAHIAAAAAAAAAAADwv4YAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-05-11T00:43:17.204Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Main.cs",
+              "DocumentMoniker": "C:\\Users\\O1ogr\\source\\repos\\LauncherV1\\LauncherV1\\Main.cs",
+              "RelativeDocumentMoniker": "LauncherV1\\Main.cs",
+              "ToolTip": "C:\\Users\\O1ogr\\source\\repos\\LauncherV1\\LauncherV1\\Main.cs",
+              "RelativeToolTip": "LauncherV1\\Main.cs",
+              "ViewState": "AQIAAIcAAAAAAAAAAAAcwJkAAAAMAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-05-11T00:31:43.293Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Main.cs [Design]",
+              "DocumentMoniker": "C:\\Users\\O1ogr\\source\\repos\\LauncherV1\\LauncherV1\\Main.cs",
+              "RelativeDocumentMoniker": "LauncherV1\\Main.cs",
+              "ToolTip": "C:\\Users\\O1ogr\\source\\repos\\LauncherV1\\LauncherV1\\Main.cs [Design]",
+              "RelativeToolTip": "LauncherV1\\Main.cs [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-05-11T00:22:36.511Z",
+              "EditorCaption": " [Design]"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
