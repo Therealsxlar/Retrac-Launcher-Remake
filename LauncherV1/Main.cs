@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
+using System.Diagnostics.Tracing;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.IO;
@@ -163,6 +164,7 @@ namespace LauncherV1
         private void ExitPictureBox_Click(object sender, EventArgs e)
         {
             isFadingOut = true;
+            CloseLauncherProcessIfRequired(); // if someone exits the launcher then it automatically exits fortnite
         }
 
         // Start on fortnite launching/closing
@@ -190,45 +192,28 @@ namespace LauncherV1
 
         private void CloseLauncherProcessIfRequired()
         {
-            if (LaunchButton.Text == "Launch")
+            Process[] fortniteProcesses = Process.GetProcessesByName("FortniteClient-Win64-Shipping_BE");
+            foreach (Process fortniteProcess in fortniteProcesses)
             {
-                Process[] launcherProcesses = Process.GetProcessesByName("FortniteLauncher");
-                foreach (Process launcherProcess in launcherProcesses)
-                {
-                    launcherProcess.Kill();
-                    CloseBEProcess();
-                    CloseFortniteProcess();
-                    IsEpicGamesLauncherRunning();
-                }
+                fortniteProcess.Kill();
             }
-        }
 
-        private void CloseBEProcess()
-        {
-            if (LaunchButton.Text == "Launch")
+            fortniteProcesses = Process.GetProcessesByName("FortniteClient-Win64-Shipping");
+            foreach (Process fortniteProcess in fortniteProcesses)
             {
-                Process[] launcherProcesses = Process.GetProcessesByName("FortniteClient-Win64-Shipping_BE");
-                foreach (Process launcherProcess in launcherProcesses)
-                {
-                    launcherProcess.Kill();
-                    CloseBEProcess();
-                    CloseFortniteProcess();
-                    IsEpicGamesLauncherRunning();
-                }
+                fortniteProcess.Kill();
             }
-        }
 
-        private void CloseFortniteProcess()
-        {
-            if (LaunchButton.Text == "Launch")
+            fortniteProcesses = Process.GetProcessesByName("FortniteLauncher");
+            foreach (Process fortniteProcess in fortniteProcesses)
             {
-                Process[] launcherProcesses = Process.GetProcessesByName("FortniteClient-Win64-Shipping");
-                foreach (Process launcherProcess in launcherProcesses)
-                {
-                    launcherProcess.Kill();
-                    CloseBEProcess();
-                    CloseFortniteProcess();
-                }
+                fortniteProcess.Kill();
+            }
+
+            fortniteProcesses = Process.GetProcessesByName("EpicGamesLauncher");
+            foreach (Process fortniteProcess in fortniteProcesses)
+            {
+                fortniteProcess.Kill();
             }
         }
 
@@ -236,21 +221,6 @@ namespace LauncherV1
         {
             Process[] processes = Process.GetProcessesByName("FortniteClient-Win64-Shipping");
             return processes.Length > 0;
-        }
-
-        private void IsEpicGamesLauncherRunning()
-        {
-            if (LaunchButton.Text == "Launch")
-            {
-                Process[] launcherProcesses = Process.GetProcessesByName("EpicGamesLauncher");
-                foreach (Process launcherProcess in launcherProcesses)
-                {
-                    launcherProcess.Kill();
-                    CloseBEProcess();
-                    CloseFortniteProcess();
-                    IsEpicGamesLauncherRunning();
-                }
-            }
         }
         // End on fortnite launching/closing
 
@@ -264,9 +234,18 @@ namespace LauncherV1
             buttonfadingredonlaunch.Tick += FadeOnLaunch_Tick;
             buttonfadingredonlaunch.Start();
 
+            Downloader downloaderForm = new Downloader();
+            downloaderForm.Show();
+
+            // Center downloaderForm in the middle of Main.cs
+            int x = this.Location.X + (this.Width - downloaderForm.Width) / 2;
+            int y = this.Location.Y + (this.Height - downloaderForm.Height) / 2;
+            downloaderForm.Location = new Point(x, y);
+
             if (IsFortniteRunning())
             {
                 MessageBox.Show("Fortnite is already running. If you closed it, please restart the launcher.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                downloaderForm.FadeOut();
                 buttonfadingredonlaunch.Stop();
                 buttonfadingredonlaunch.Dispose();
                 return;
@@ -280,60 +259,40 @@ namespace LauncherV1
 
             string dllPath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "CycloServer.dll");
 
-            if (!File.Exists(dllPath))
-            {
-                DialogResult result = MessageBox.Show("Seems like the DLL is missing. Would you like to install it?", "DLL Missing", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                if (result == DialogResult.Yes)
-                {
-                    try
-                    {
-                        using (WebClient webClient = new WebClient())
-                        {
-                            await webClient.DownloadFileTaskAsync(dllUrl, dllPath);
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show($"Failed to download the required DLL: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        LaunchButton.Text = "Launch";
-                        return;
-                    }
-                }
-                else
-                {
-                    LaunchButton.Text = "Launch";
-                    return;
-                }
-            }
-
-            foreach (string file in requiredFiles)
-            {
-                string filePath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), file);
-                if (!File.Exists(filePath))
-                {
-                    MessageBox.Show($"\"{file}\" was not found. Please try again or reinstall the launcher.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    LaunchButton.Text = "Launch";
-                    return;
-                }
-            }
-
-            LaunchButton.Text = "Launched";
-
             try
             {
+                downloaderForm.UpdateStatus("Downloading CycloServer.dll");
                 using (WebClient webClient = new WebClient())
                 {
+                    webClient.DownloadProgressChanged += (s, eventArgs) =>
+                    {
+                        downloaderForm.SetProgress(eventArgs.ProgressPercentage);
+                    };
+
                     await webClient.DownloadFileTaskAsync(dllUrl, dllPath);
                 }
 
+                downloaderForm.FadeOutLabel();
+                await Task.Delay(500);
+
+                downloaderForm.UpdateStatus("Downloading FortniteLauncher.exe");
                 using (WebClient webClient = new WebClient())
                 {
+                    webClient.DownloadProgressChanged += (s, eventArgs) =>
+                    {
+                        downloaderForm.SetProgress(eventArgs.ProgressPercentage);
+                    };
+
                     await webClient.DownloadFileTaskAsync(launcherURL, Path.Combine(Properties.Settings.Default.SelectedFolderPath, "FortniteGame\\Binaries\\Win64\\FortniteLauncher.exe.new"));
                 }
+
+                LockedPictureBox.Visible = true;
+                downloaderForm.FadeOut();
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"Failed to download the required files: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                downloaderForm.Close();
                 LaunchButton.Text = "Launch";
                 return;
             }
@@ -347,11 +306,15 @@ namespace LauncherV1
             {
                 LaunchButton.Text = "ERROR";
                 MessageBox.Show($"Please restart the launcher.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                LaunchButton.Text = "Launch";
+                LaunchButton.FillColor = Color.FromArgb(255, 191, 0);
+                LockedPictureBox.Visible = false;
+                LaunchButton.ForeColor = Color.White;
+                LaunchButton.Text = "Restart Required";
+                downloaderForm.Close();
                 return;
             }
 
-            LaunchButton.Text = "Fortnite is running!";
+            LaunchButton.Text = "Fortnite is running";
             await Task.Run(() =>
             {
                 Process process = StartProcess(Path.Combine(Properties.Settings.Default.SelectedFolderPath, "FortniteGame\\Binaries\\Win64\\FortniteLauncher.exe"), true, "");
@@ -364,9 +327,6 @@ namespace LauncherV1
                 {
                     MessageBox.Show("Invalid Email");
                     CloseLauncherProcessIfRequired();
-                    CloseFortniteProcess();
-                    CloseBEProcess();
-                    IsEpicGamesLauncherRunning();
                     return;
                 }
 
@@ -374,9 +334,6 @@ namespace LauncherV1
                 {
                     MessageBox.Show("Your Secret key is invalid.");
                     CloseLauncherProcessIfRequired();
-                    CloseFortniteProcess();
-                    CloseBEProcess();
-                    IsEpicGamesLauncherRunning();
                     return;
                 }
 
@@ -407,9 +364,9 @@ namespace LauncherV1
         private void FadeOnLaunch_Tick(object sender, EventArgs e) // idek anymore this is to hard to do in C#
         {
             int speed = 100;
-            int targetR = 150;
-            int targetG = 0;
-            int targetB = 24;
+            int targetR = 227;
+            int targetG = 64;
+            int targetB = 57;
 
             if (LaunchButton.FillColor.R > targetR)
                 LaunchButton.FillColor = Color.FromArgb(Math.Max(LaunchButton.FillColor.R - speed, targetR), LaunchButton.FillColor.G, LaunchButton.FillColor.B);
@@ -426,7 +383,9 @@ namespace LauncherV1
 
             if (LaunchButton.FillColor.R == targetR && LaunchButton.FillColor.G == targetG && LaunchButton.FillColor.B == targetB)
             {
-                LaunchButton.Text = "Fortnite is running!";
+                LaunchButton.Text = "Fortnite is running";
+                LaunchButton.ForeColor = Color.FromArgb(248, 204, 202);
+                LockedPictureBox.Visible = true;
                 buttonfadingredonlaunch.Stop();
                 buttonfadingredonlaunch.Dispose();
             }
@@ -468,6 +427,37 @@ namespace LauncherV1
         private void DiscordButton_Click(object sender, EventArgs e)
         {
             Process.Start("https://dsc.gg/sxlar");
+        }
+
+        private void PlayersOnlineLabel_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void SettingsPictureBox_Click(object sender, EventArgs e)
+        {
+            // Settings settings = new Settings();
+            // settings.Show();
+        }
+
+        private void LaunchButton_MouseHover(object sender, EventArgs e)
+        {
+            LockedPictureBox.BackColor = Color.FromArgb(231, 92, 86);
+        }
+
+        private void LockedPictureBox_MouseHover(object sender, EventArgs e)
+        {
+            LockedPictureBox.BackColor = Color.FromArgb(231, 92, 86);
+        }
+
+        private void LaunchButton_MouseEnter(object sender, EventArgs e)
+        {
+            LockedPictureBox.BackColor = Color.FromArgb(231, 92, 86);
+        }
+
+        private void LaunchButton_MouseLeave(object sender, EventArgs e)
+        {
+            LockedPictureBox.BackColor = Color.FromArgb(227, 64, 57);
         }
     }
 }
