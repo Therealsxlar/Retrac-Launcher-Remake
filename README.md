@@ -7,10 +7,13 @@
 - [X] **Launching** (Automatically downloads a dll I made redirects to the port **3551**)
 - [X] **Selecting Fortnite Path**
 - [X] **Joining Discord with button**
+- [X] **Featured Downloader**
+- [X] **Players Online** - Will add support for LawinServerV2 (super easy)
 
 ## Todo
 - [ ] **Settings**
 - [ ] **Authenticating** (future things) prolly wont happen on this remake
 - [ ] **Auto Updater**
+- [ ] **Change Username** - Singleplayer only.
 
-![image](https://media.discordapp.net/attachments/853697541706350632/1238955594581409835/image-removebg-preview.png?ex=66412ad0&is=663fd950&hm=877d1f9b63f22fb96bb9ce31960b80bd7fc7546897de4655e26573ddbc6bdb70&=&format=webp&quality=lossless)
+![image](https://media.discordapp.net/attachments/853697541706350632/1239302521470849096/image-removebg-preview.png?ex=66426dea&is=66411c6a&hm=90f1e9f68104a9c0678cc1c9a597064ad8976fe23c7d0e996ffaadbd8ad81ad9&=&format=webp&quality=lossless)
