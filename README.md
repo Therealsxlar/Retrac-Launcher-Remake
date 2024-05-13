@@ -6,7 +6,7 @@
 ## Features
 - [X] **Launching** (Automatically downloads a dll I made redirects to the port **3551**)
 - [X] **Selecting Fortnite Path**
-- [X] **Joining Discord with button**
+- [X] **Joining Discord with button** - removed
 - [X] **Featured Downloader**
 - [X] **Players Online** - Will add support for LawinServerV2 (super easy)
 - [X] **Settings** - Just the form adding more tomorrow
