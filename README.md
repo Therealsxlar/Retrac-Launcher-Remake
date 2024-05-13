@@ -17,4 +17,4 @@
 - [ ] **Auto Updater** - future (plans)
 
 **Update as of 5/13/24 i'm done working on this remake for now, I'll fix bugs if people find any, Discord: Sxlarr**
-![image](https://media.discordapp.net/attachments/853697541706350632/1239302521470849096/image-removebg-preview.png?ex=66426dea&is=66411c6a&hm=90f1e9f68104a9c0678cc1c9a597064ad8976fe23c7d0e996ffaadbd8ad81ad9&=&format=webp&quality=lossless)
+![image](https://media.discordapp.net/attachments/853697541706350632/1239709015169306754/image-removebg-preview.png?ex=6643e87d&is=664296fd&hm=d9c2bd113ddc413e973172de36cdf75b75009bf5713fd2cc87e72cb8501273ab&=&format=webp&quality=lossless)
