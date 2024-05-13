@@ -9,10 +9,10 @@
 - [X] **Joining Discord with button**
 - [X] **Featured Downloader**
 - [X] **Players Online** - Will add support for LawinServerV2 (super easy)
+- [X] **Settings** - Just the form adding more tomorrow
 
 ## Todo
-- [ ] **Settings**
-- [ ] **Authenticating** (future things) prolly wont happen on this remake
+- [ ] **Authenticating** (most definitely not happening on this remake unless someone helps me)
 - [ ] **Auto Updater**
 - [ ] **Change Username** - Singleplayer only.
 
