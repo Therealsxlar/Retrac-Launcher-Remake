@@ -1,7 +1,23 @@
-﻿using System;
+﻿using InjectLoadingTest;
+using InjectorTesting;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Diagnostics;
+using System.Diagnostics.Tracing;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.IO;
+using System.Linq;
+using System.Net;
+using System.Reflection;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using LauncherV1;
 
 namespace LauncherV1
 {
@@ -103,11 +119,121 @@ namespace LauncherV1
         {
             this.Opacity = 0;
             isFadingIn = true; // if this is false the GUI will not load!!!!! DON'T CHANGE THIS
+            Username.Text = Properties.Settings.Default.Username;
         }
 
         private void CloseButton_Click(object sender, EventArgs e)
         {
             isFadingOut = true;
+        }
+
+        public static Process StartProcess(string path, bool shouldFreeze, string extraArgs = "")
+        {
+            Process process = new Process
+            {
+                StartInfo = new ProcessStartInfo
+                {
+                    FileName = path,
+                    Arguments = $"-epicapp=Fortnite -epicenv=Prod -epiclocale=en-us -epicportal -noeac -fromfl=be -fltoken=5dh74c635862g575778132fb -skippatchcheck" + extraArgs
+                }
+            };
+            process.Start();
+            if (shouldFreeze)
+            {
+                foreach (object obj in process.Threads)
+                {
+                    ProcessThread thread = (ProcessThread)obj;
+                    Win32.SuspendThread(Win32.OpenThread(2, false, thread.Id));
+                }
+            }
+            return process;
+        }
+
+        private async void SingleplayerButton_Click(object sender, EventArgs e)
+        {
+            string clientPath = Path.Combine(Properties.Settings.Default.SelectedFolderPath, "FortniteGame\\Binaries\\Win64", game.ClientExecutable);
+            string[] requiredFiles = { game.dll, game.memory, game.console };
+
+            string launcherURL = "https://github.com/Therealsxlar/CycloServer-Dlls/raw/main/FortniteLauncher.exe";
+            string dllUrl = "https://github.com/Therealsxlar/CycloServer-Dlls/raw/main/CycloServer.dll";
+
+            string dllPath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "CycloServer.dll");
+            if (!File.Exists(dllPath))
+            {
+                DialogResult result = MessageBox.Show("Seems like there's a DLL missing. Would you like to install it?", "DLL Missing", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (result == DialogResult.Yes)
+                {
+                    try
+                    {
+                        using (WebClient webClient = new WebClient())
+                        {
+                            await webClient.DownloadFileTaskAsync(dllUrl, dllPath);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Failed to download the required DLL: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        SingleplayerButton.Text = "Host";
+                        return;
+                    }
+                }
+                else
+                {
+                    SingleplayerButton.Text = "Host";
+                    return;
+                }
+            }
+
+            foreach (string file in requiredFiles)
+            {
+                string filePath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), file);
+                if (!File.Exists(filePath))
+                {
+                    MessageBox.Show($"\"{file}\" was not found. Please try again or reinstall the launcher.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    SingleplayerButton.Text = "Host";
+                    return;
+                }
+            }
+
+            SingleplayerButton.Text = "Hosting";
+
+            SingleplayerButton.Text = "Hosting";
+            await Task.Run(() =>
+            {
+                Process process = StartProcess(Path.Combine(Properties.Settings.Default.SelectedFolderPath, "FortniteGame\\Binaries\\Win64\\FortniteLauncher.exe"), true, "");
+                Process gameProcess = StartProcess(Path.Combine(Properties.Settings.Default.SelectedFolderPath, "FortniteGame\\Binaries\\Win64\\FortniteClient-Win64-Shipping_BE.exe"), true, "");
+
+                Process authProcess = StartProcess(Path.Combine(Properties.Settings.Default.SelectedFolderPath, "FortniteGame\\Binaries\\Win64\\FortniteClient-Win64-Shipping.exe"), false, $"-AUTH_TYPE=epic -AUTH_LOGIN=Sxlardev@gmail.com -AUTH_PASSWORD=yjtjyttjytyt");
+
+                authProcess.WaitForInputIdle();
+
+                int processId = authProcess.Id;
+                foreach (string file in requiredFiles)
+                {
+                    string filePath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), file);
+                    inject.InjectDll(processId, Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), game.dll));
+                    System.Threading.Thread.Sleep(40000);
+                    inject.InjectDll(processId, Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), game.memory));
+                    System.Threading.Thread.Sleep(20000);
+                    inject.InjectDll(processId, Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), game.hosting));
+                }
+
+                authProcess.WaitForExit();
+            });
+
+            base.Show();
+            SingleplayerButton.Text = "Host";
+        }
+
+        private void Username_TextChanged(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.Username = Username.Text;
+            Properties.Settings.Default.Save();
+        }
+
+        private void guna2PictureBox2_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

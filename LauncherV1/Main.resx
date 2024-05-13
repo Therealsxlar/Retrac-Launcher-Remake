@@ -512,7 +512,7 @@
   <data name="SettingsPictureBox.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAAgAAAAIACAYAAAD0eNT6AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        vQAADr0BR/uQrQAAGuNJREFUeF7t3Vm2HMeZpVFBBMVMScnM+b/WcGogNYyqAOOwAJIHuNF5uDX7W2s/
+        vAAADrwBlbxySQAAGuNJREFUeF7t3Vm2HMeZpVFBBMVMScnM+b/WcGogNYyqAOOwAJIHuNF5uDX7W2s/
         CYxwN/vdTWwu8DdJ3+9//e//83+ZV7ZRkqTbaocJc7ps5y/XXZUk6ft9bocI88v+SpL0x9qhwVqy1ZIk
         XWuHBWvKlkuSdq8dEqwr2y5J2r12SLC2bL0kadfa4cD6sv2SpF1rhwPry/ZLknasHQzsI2MgSdqtdiiw
         j4yBJGm32qHAHjICkqQdawcDe8gISJJ2rB0M7CEjIEnasXYwsIeMgCRpx9rBwD4yBpKknWoHAnvJKEiS
@@ -633,7 +633,7 @@
   <data name="LockedPictureBox.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAAgAAAAIACAYAAAD0eNT6AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        vwAADr8BOAVTJAAAFaBJREFUeF7t3d2uI9d1hVF1t34TyXYM+Cbv/05BHiVXCTucMnSSqd7FQxYPV9X4
+        vAAADrwBlbxySQAAFaBJREFUeF7t3d2uI9d1hVF1t34TyXYM+Cbv/05BHiVXCTucMnSSqd7FQxYPV9X4
         gHFnwNqLe9cyoJb8naRZ/dd//sd/v6L85UmSpHtqS3aqHEmSJP1eW5hnkONLknSO2jLE/yCQJB2stuzY
         JiOUJOn1a4uM+2W8kiS9Tm1hsZ+MXZKk59cWE8+Xn0OSpP1qC4jXkZ9JkqT7a4uG15efT5Kk22pLhXku
         P+Wn6y8qSdKf1BYIx5GfWZKka21ZcFz52SVJZ60tB87jcgX87QFJOkttEUCuhyTpaLWPPvxfuS6SpAP0

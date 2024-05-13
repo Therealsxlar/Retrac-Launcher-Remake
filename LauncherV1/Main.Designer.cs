@@ -31,7 +31,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Launcher));
             this.LaunchButton = new Guna.UI2.WinForms.Guna2Button();
             this.MainPanel = new Guna.UI2.WinForms.Guna2Panel();
-            this.guna2HtmlLabel1 = new Guna.UI2.WinForms.Guna2HtmlLabel();
+            this.UsernameLabel = new Guna.UI2.WinForms.Guna2HtmlLabel();
             this.PlayersOnlineLabel = new Guna.UI2.WinForms.Guna2HtmlLabel();
             this.ExitPictureBox = new Guna.UI2.WinForms.Guna2PictureBox();
             this.LauncherPictureBox = new Guna.UI2.WinForms.Guna2PictureBox();
@@ -73,7 +73,7 @@
             this.MainPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(110)))), ((int)(((byte)(175)))));
             this.MainPanel.BorderRadius = 5;
             this.MainPanel.BorderStyle = System.Drawing.Drawing2D.DashStyle.Custom;
-            this.MainPanel.Controls.Add(this.guna2HtmlLabel1);
+            this.MainPanel.Controls.Add(this.UsernameLabel);
             this.MainPanel.Controls.Add(this.PlayersOnlineLabel);
             this.MainPanel.Controls.Add(this.ExitPictureBox);
             this.MainPanel.Controls.Add(this.LauncherPictureBox);
@@ -83,16 +83,17 @@
             this.MainPanel.Size = new System.Drawing.Size(375, 85);
             this.MainPanel.TabIndex = 1;
             // 
-            // guna2HtmlLabel1
+            // UsernameLabel
             // 
-            this.guna2HtmlLabel1.BackColor = System.Drawing.Color.Transparent;
-            this.guna2HtmlLabel1.Font = new System.Drawing.Font("Arial Black", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.guna2HtmlLabel1.ForeColor = System.Drawing.SystemColors.Control;
-            this.guna2HtmlLabel1.Location = new System.Drawing.Point(253, 57);
-            this.guna2HtmlLabel1.Name = "guna2HtmlLabel1";
-            this.guna2HtmlLabel1.Size = new System.Drawing.Size(115, 19);
-            this.guna2HtmlLabel1.TabIndex = 67;
-            this.guna2HtmlLabel1.Text = "CycloServer-User";
+            this.UsernameLabel.BackColor = System.Drawing.Color.Transparent;
+            this.UsernameLabel.Font = new System.Drawing.Font("Arial Black", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.UsernameLabel.ForeColor = System.Drawing.SystemColors.Control;
+            this.UsernameLabel.Location = new System.Drawing.Point(298, 56);
+            this.UsernameLabel.Name = "UsernameLabel";
+            this.UsernameLabel.Size = new System.Drawing.Size(115, 19);
+            this.UsernameLabel.TabIndex = 67;
+            this.UsernameLabel.Text = "CycloServer-User";
+            this.UsernameLabel.Click += new System.EventHandler(this.UsernameLabel_Click);
             // 
             // PlayersOnlineLabel
             // 
@@ -172,7 +173,7 @@
             this.FortnitePath.BackColor = System.Drawing.Color.Transparent;
             this.FortnitePath.Font = new System.Drawing.Font("Arial Black", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FortnitePath.ForeColor = System.Drawing.SystemColors.Control;
-            this.FortnitePath.Location = new System.Drawing.Point(12, 347);
+            this.FortnitePath.Location = new System.Drawing.Point(16, 347);
             this.FortnitePath.Name = "FortnitePath";
             this.FortnitePath.Size = new System.Drawing.Size(340, 19);
             this.FortnitePath.TabIndex = 64;
@@ -238,7 +239,7 @@
         private Guna.UI2.WinForms.Guna2HtmlLabel FortnitePath;
         private Guna.UI2.WinForms.Guna2HtmlLabel PlayersOnlineLabel;
         private Guna.UI2.WinForms.Guna2PictureBox LockedPictureBox;
-        private Guna.UI2.WinForms.Guna2HtmlLabel guna2HtmlLabel1;
+        private Guna.UI2.WinForms.Guna2HtmlLabel UsernameLabel;
     }
 }
 

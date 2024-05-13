@@ -15,6 +15,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 
 namespace LauncherV1
 {
@@ -59,6 +60,7 @@ namespace LauncherV1
         {
             this.Opacity = 0;
             isFadingIn = true; // if this is false the GUI will not load!!!!! DON'T CHANGE THIS
+            UsernameLabel.Text = Properties.Settings.Default.Username;
             if (!string.IsNullOrEmpty(Properties.Settings.Default.SelectedFolderPath))
             {
                 FortnitePathButton.Text = "Change Fortnite Path";
@@ -237,7 +239,7 @@ namespace LauncherV1
             Downloader downloaderForm = new Downloader();
             downloaderForm.Show();
 
-            // Center downloaderForm in the middle of Main.cs
+            // Center downloaderForm in the middle of Main - doesn't work.
             int x = this.Location.X + (this.Width - downloaderForm.Width) / 2;
             int y = this.Location.Y + (this.Height - downloaderForm.Height) / 2;
             downloaderForm.Location = new Point(x, y);
@@ -325,6 +327,7 @@ namespace LauncherV1
 
                 string email = "CycloServer-User@snows.rocks";
                 string password = "zzzzzzzzzzzzzzzz";
+                string username = Properties.Settings.Default.Username;
 
                 if (string.IsNullOrWhiteSpace(email) || !email.Contains("@"))
                 {
@@ -342,7 +345,7 @@ namespace LauncherV1
 
                 password = Uri.EscapeDataString(password);
 
-                Process authProcess = StartProcess(Path.Combine(Properties.Settings.Default.SelectedFolderPath, "FortniteGame\\Binaries\\Win64\\FortniteClient-Win64-Shipping.exe"), false, $"-AUTH_TYPE=epic -AUTH_LOGIN={email} -AUTH_PASSWORD={password}");
+                Process authProcess = StartProcess(Path.Combine(Properties.Settings.Default.SelectedFolderPath, "FortniteGame\\Binaries\\Win64\\FortniteClient-Win64-Shipping.exe"), false, $"-AUTH_TYPE=epic -AUTH_LOGIN={username} -AUTH_PASSWORD={password}");
 
                 authProcess.WaitForInputIdle();
 
@@ -351,7 +354,7 @@ namespace LauncherV1
                 {
                     string filePath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), file);
                     inject.InjectDll(processId, Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), game.dll));
-                    System.Threading.Thread.Sleep(40000);
+                    System.Threading.Thread.Sleep(50000);
                     inject.InjectDll(processId, Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), game.memory));
                     System.Threading.Thread.Sleep(20000);
                     inject.InjectDll(processId, Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), game.console));
@@ -461,6 +464,23 @@ namespace LauncherV1
         {
             Settings settings = new Settings();
             settings.Show();
+        }
+
+        private void UsernameLabel_TextChanged(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.Username = UsernameLabel.Text;
+            Properties.Settings.Default.Save();
+        }
+
+        private void Username_TextChanged(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.Username = UsernameLabel.Text;
+            Properties.Settings.Default.Save();
+        }
+
+        private void UsernameLabel_Click(object sender, EventArgs e)
+        {
+            UsernameLabel.Text = Properties.Settings.Default.Username;
         }
     }
 }
