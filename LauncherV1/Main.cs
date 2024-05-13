@@ -285,18 +285,21 @@ namespace LauncherV1
 
                     await webClient.DownloadFileTaskAsync(launcherURL, Path.Combine(Properties.Settings.Default.SelectedFolderPath, "FortniteGame\\Binaries\\Win64\\FortniteLauncher.exe.new"));
                 }
-
                 LockedPictureBox.Visible = true;
+                await Task.Delay(800);
                 downloaderForm.FadeOut();
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Failed to download the required files: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                FailedDownload failedDownload = new FailedDownload();
+                failedDownload.Show();
                 downloaderForm.Close();
+                LockedPictureBox.Visible = false;
+                LaunchButton.FillColor = Color.FromArgb(68, 173, 77);
+                LaunchButton.ForeColor = Color.White;
                 LaunchButton.Text = "Launch";
                 return;
             }
-
             try
             {
                 File.Delete(Path.Combine(Properties.Settings.Default.SelectedFolderPath, "FortniteGame\\Binaries\\Win64\\FortniteLauncher.exe"));
@@ -434,12 +437,6 @@ namespace LauncherV1
 
         }
 
-        private void SettingsPictureBox_Click(object sender, EventArgs e)
-        {
-            // Settings settings = new Settings();
-            // settings.Show();
-        }
-
         private void LaunchButton_MouseHover(object sender, EventArgs e)
         {
             LockedPictureBox.BackColor = Color.FromArgb(231, 92, 86);
@@ -458,6 +455,12 @@ namespace LauncherV1
         private void LaunchButton_MouseLeave(object sender, EventArgs e)
         {
             LockedPictureBox.BackColor = Color.FromArgb(227, 64, 57);
+        }
+
+        private void SettingsPictureBox_Click(object sender, EventArgs e)
+        {
+            Settings settings = new Settings();
+            settings.Show();
         }
     }
 }

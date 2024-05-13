@@ -13,3 +13,5 @@ C:\Users\O1ogr\source\repos\LauncherV1\LauncherV1\bin\Debug\Newtonsoft.Json.xml
 C:\Users\O1ogr\source\repos\LauncherV1\LauncherV1\obj\Debug\LauncherV1.csproj.Up2Date
 C:\Users\O1ogr\source\repos\LauncherV1\LauncherV1\obj\Debug\LauncherV1.exe
 C:\Users\O1ogr\source\repos\LauncherV1\LauncherV1\obj\Debug\LauncherV1.pdb
+C:\Users\O1ogr\source\repos\LauncherV1\LauncherV1\obj\Debug\LauncherV1.FailedDownload.resources
+C:\Users\O1ogr\source\repos\LauncherV1\LauncherV1\obj\Debug\LauncherV1.Settings.resources

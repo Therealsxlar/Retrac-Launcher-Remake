@@ -33,7 +33,9 @@
             this.LauncherPictureBox = new Guna.UI2.WinForms.Guna2PictureBox();
             this.LongLabel = new Guna.UI2.WinForms.Guna2HtmlLabel();
             this.ProgressBar = new Guna.UI2.WinForms.Guna2VProgressBar();
+            this.guna2CustomGradientPanel2 = new Guna.UI2.WinForms.Guna2CustomGradientPanel();
             ((System.ComponentModel.ISupportInitialize)(this.LauncherPictureBox)).BeginInit();
+            this.guna2CustomGradientPanel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // labelStatus
@@ -41,7 +43,7 @@
             this.labelStatus.BackColor = System.Drawing.Color.Transparent;
             this.labelStatus.Font = new System.Drawing.Font("Arial Black", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelStatus.ForeColor = System.Drawing.SystemColors.Control;
-            this.labelStatus.Location = new System.Drawing.Point(9, 58);
+            this.labelStatus.Location = new System.Drawing.Point(6, 4);
             this.labelStatus.Name = "labelStatus";
             this.labelStatus.Size = new System.Drawing.Size(12, 20);
             this.labelStatus.TabIndex = 67;
@@ -53,9 +55,9 @@
             this.LauncherPictureBox.BackColor = System.Drawing.Color.Transparent;
             this.LauncherPictureBox.Image = ((System.Drawing.Image)(resources.GetObject("LauncherPictureBox.Image")));
             this.LauncherPictureBox.ImageRotate = 0F;
-            this.LauncherPictureBox.Location = new System.Drawing.Point(-4, -25);
+            this.LauncherPictureBox.Location = new System.Drawing.Point(-11, -45);
             this.LauncherPictureBox.Name = "LauncherPictureBox";
-            this.LauncherPictureBox.Size = new System.Drawing.Size(259, 133);
+            this.LauncherPictureBox.Size = new System.Drawing.Size(284, 149);
             this.LauncherPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.LauncherPictureBox.TabIndex = 68;
             this.LauncherPictureBox.TabStop = false;
@@ -65,7 +67,7 @@
             this.LongLabel.BackColor = System.Drawing.Color.Transparent;
             this.LongLabel.Font = new System.Drawing.Font("Arial Black", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LongLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(213)))), ((int)(((byte)(255)))));
-            this.LongLabel.Location = new System.Drawing.Point(9, 33);
+            this.LongLabel.Location = new System.Drawing.Point(7, 26);
             this.LongLabel.Name = "LongLabel";
             this.LongLabel.Size = new System.Drawing.Size(186, 20);
             this.LongLabel.TabIndex = 69;
@@ -86,15 +88,29 @@
             this.ProgressBar.Text = "ProgressBar";
             this.ProgressBar.TextRenderingHint = System.Drawing.Text.TextRenderingHint.SystemDefault;
             // 
+            // guna2CustomGradientPanel2
+            // 
+            this.guna2CustomGradientPanel2.BorderRadius = 5;
+            this.guna2CustomGradientPanel2.BorderStyle = System.Drawing.Drawing2D.DashStyle.Custom;
+            this.guna2CustomGradientPanel2.Controls.Add(this.labelStatus);
+            this.guna2CustomGradientPanel2.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(101)))), ((int)(((byte)(191)))));
+            this.guna2CustomGradientPanel2.FillColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(101)))), ((int)(((byte)(191)))));
+            this.guna2CustomGradientPanel2.FillColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(101)))), ((int)(((byte)(191)))));
+            this.guna2CustomGradientPanel2.FillColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(101)))), ((int)(((byte)(191)))));
+            this.guna2CustomGradientPanel2.Location = new System.Drawing.Point(9, 51);
+            this.guna2CustomGradientPanel2.Name = "guna2CustomGradientPanel2";
+            this.guna2CustomGradientPanel2.Size = new System.Drawing.Size(268, 29);
+            this.guna2CustomGradientPanel2.TabIndex = 71;
+            // 
             // Downloader
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(78)))), ((int)(((byte)(114)))), ((int)(((byte)(255)))));
             this.ClientSize = new System.Drawing.Size(289, 106);
+            this.Controls.Add(this.guna2CustomGradientPanel2);
             this.Controls.Add(this.ProgressBar);
             this.Controls.Add(this.LongLabel);
-            this.Controls.Add(this.labelStatus);
             this.Controls.Add(this.LauncherPictureBox);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "Downloader";
@@ -102,6 +118,8 @@
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Downloader_Load);
             ((System.ComponentModel.ISupportInitialize)(this.LauncherPictureBox)).EndInit();
+            this.guna2CustomGradientPanel2.ResumeLayout(false);
+            this.guna2CustomGradientPanel2.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -113,5 +131,6 @@
         private Guna.UI2.WinForms.Guna2PictureBox LauncherPictureBox;
         private Guna.UI2.WinForms.Guna2HtmlLabel LongLabel;
         private Guna.UI2.WinForms.Guna2VProgressBar ProgressBar;
+        private Guna.UI2.WinForms.Guna2CustomGradientPanel guna2CustomGradientPanel2;
     }
 }

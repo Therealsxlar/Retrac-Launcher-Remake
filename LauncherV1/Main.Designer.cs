@@ -31,15 +31,14 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Launcher));
             this.LaunchButton = new Guna.UI2.WinForms.Guna2Button();
             this.MainPanel = new Guna.UI2.WinForms.Guna2Panel();
+            this.guna2HtmlLabel1 = new Guna.UI2.WinForms.Guna2HtmlLabel();
             this.PlayersOnlineLabel = new Guna.UI2.WinForms.Guna2HtmlLabel();
             this.ExitPictureBox = new Guna.UI2.WinForms.Guna2PictureBox();
             this.LauncherPictureBox = new Guna.UI2.WinForms.Guna2PictureBox();
             this.SettingsPictureBox = new Guna.UI2.WinForms.Guna2PictureBox();
             this.FortnitePathButton = new Guna.UI2.WinForms.Guna2Button();
             this.FortnitePath = new Guna.UI2.WinForms.Guna2HtmlLabel();
-            this.DiscordButton = new Guna.UI2.WinForms.Guna2Button();
             this.LockedPictureBox = new Guna.UI2.WinForms.Guna2PictureBox();
-            this.guna2HtmlLabel1 = new Guna.UI2.WinForms.Guna2HtmlLabel();
             this.MainPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ExitPictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.LauncherPictureBox)).BeginInit();
@@ -83,6 +82,17 @@
             this.MainPanel.Name = "MainPanel";
             this.MainPanel.Size = new System.Drawing.Size(375, 85);
             this.MainPanel.TabIndex = 1;
+            // 
+            // guna2HtmlLabel1
+            // 
+            this.guna2HtmlLabel1.BackColor = System.Drawing.Color.Transparent;
+            this.guna2HtmlLabel1.Font = new System.Drawing.Font("Arial Black", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.guna2HtmlLabel1.ForeColor = System.Drawing.SystemColors.Control;
+            this.guna2HtmlLabel1.Location = new System.Drawing.Point(253, 57);
+            this.guna2HtmlLabel1.Name = "guna2HtmlLabel1";
+            this.guna2HtmlLabel1.Size = new System.Drawing.Size(115, 19);
+            this.guna2HtmlLabel1.TabIndex = 67;
+            this.guna2HtmlLabel1.Text = "CycloServer-User";
             // 
             // PlayersOnlineLabel
             // 
@@ -136,6 +146,7 @@
             this.SettingsPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.SettingsPictureBox.TabIndex = 62;
             this.SettingsPictureBox.TabStop = false;
+            this.SettingsPictureBox.Click += new System.EventHandler(this.SettingsPictureBox_Click);
             // 
             // FortnitePathButton
             // 
@@ -161,31 +172,12 @@
             this.FortnitePath.BackColor = System.Drawing.Color.Transparent;
             this.FortnitePath.Font = new System.Drawing.Font("Arial Black", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FortnitePath.ForeColor = System.Drawing.SystemColors.Control;
-            this.FortnitePath.Location = new System.Drawing.Point(16, 294);
+            this.FortnitePath.Location = new System.Drawing.Point(12, 347);
             this.FortnitePath.Name = "FortnitePath";
             this.FortnitePath.Size = new System.Drawing.Size(340, 19);
             this.FortnitePath.TabIndex = 64;
             this.FortnitePath.Text = "DON\'T DELETE THIS LABEL (used for Fortnite path)\r\n";
             this.FortnitePath.Visible = false;
-            // 
-            // DiscordButton
-            // 
-            this.DiscordButton.BorderRadius = 4;
-            this.DiscordButton.BorderStyle = System.Drawing.Drawing2D.DashStyle.Custom;
-            this.DiscordButton.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.DiscordButton.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
-            this.DiscordButton.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
-            this.DiscordButton.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-            this.DiscordButton.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-            this.DiscordButton.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(75)))), ((int)(((byte)(64)))), ((int)(((byte)(116)))));
-            this.DiscordButton.Font = new System.Drawing.Font("Arial Black", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.DiscordButton.ForeColor = System.Drawing.Color.White;
-            this.DiscordButton.Location = new System.Drawing.Point(16, 319);
-            this.DiscordButton.Name = "DiscordButton";
-            this.DiscordButton.Size = new System.Drawing.Size(342, 44);
-            this.DiscordButton.TabIndex = 65;
-            this.DiscordButton.Text = "Discord";
-            this.DiscordButton.Click += new System.EventHandler(this.DiscordButton_Click);
             // 
             // LockedPictureBox
             // 
@@ -204,17 +196,6 @@
             this.LockedPictureBox.Visible = false;
             this.LockedPictureBox.MouseHover += new System.EventHandler(this.LockedPictureBox_MouseHover);
             // 
-            // guna2HtmlLabel1
-            // 
-            this.guna2HtmlLabel1.BackColor = System.Drawing.Color.Transparent;
-            this.guna2HtmlLabel1.Font = new System.Drawing.Font("Arial Black", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.guna2HtmlLabel1.ForeColor = System.Drawing.SystemColors.Control;
-            this.guna2HtmlLabel1.Location = new System.Drawing.Point(253, 57);
-            this.guna2HtmlLabel1.Name = "guna2HtmlLabel1";
-            this.guna2HtmlLabel1.Size = new System.Drawing.Size(115, 19);
-            this.guna2HtmlLabel1.TabIndex = 67;
-            this.guna2HtmlLabel1.Text = "CycloServer-User";
-            // 
             // Launcher
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -222,7 +203,6 @@
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(46)))), ((int)(((byte)(69)))));
             this.ClientSize = new System.Drawing.Size(370, 481);
             this.Controls.Add(this.LockedPictureBox);
-            this.Controls.Add(this.DiscordButton);
             this.Controls.Add(this.FortnitePath);
             this.Controls.Add(this.FortnitePathButton);
             this.Controls.Add(this.MainPanel);
@@ -256,7 +236,6 @@
         private Guna.UI2.WinForms.Guna2Button FortnitePathButton;
         private Guna.UI2.WinForms.Guna2PictureBox ExitPictureBox;
         private Guna.UI2.WinForms.Guna2HtmlLabel FortnitePath;
-        private Guna.UI2.WinForms.Guna2Button DiscordButton;
         private Guna.UI2.WinForms.Guna2HtmlLabel PlayersOnlineLabel;
         private Guna.UI2.WinForms.Guna2PictureBox LockedPictureBox;
         private Guna.UI2.WinForms.Guna2HtmlLabel guna2HtmlLabel1;

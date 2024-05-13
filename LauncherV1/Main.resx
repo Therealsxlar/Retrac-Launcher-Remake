@@ -121,7 +121,7 @@
   <data name="ExitPictureBox.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAAgAAAAIACAYAAAD0eNT6AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        vQAADr0BR/uQrQAAGmdJREFUeF7t3VGW3cZ5hVGRkpxESezY8fxfMpwMJMNIQN+jUCQP2d23AVQBtb+1
+        vAAADrwBlbxySQAAGmdJREFUeF7t3VGW3cZ5hVGRkpxESezY8fxfMpwMJMNIQN+jUCQP2d23AVQBtb+1
         9kssdldXAX9d04z4kyRJq/Rf//0//9ts/9GHxz8hSZLu1Md28f/R9s/8+vhHJUnSLWoXfpN/XJIkXb12
         0f9IfpkkSbpy7ZL/kfwySZJ05dol/5L8UkmSdMXa5f4a+eWSJOmKtcv9NfLLJUnS1WoX+1vky0iSpCvV
         LvW3yJeRJElXqV3oz8iXkyRJV6hd5s/Il5MkSVeoXebPyJeTJEmz1y7y98iXlSRJM9cu8ffIl5UkSbPW
@@ -512,7 +512,7 @@
   <data name="SettingsPictureBox.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAAgAAAAIACAYAAAD0eNT6AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        vwAADr8BOAVTJAAAGuNJREFUeF7t3Vm2HMeZpVFBBMVMScnM+b/WcGogNYyqAOOwAJIHuNF5uDX7W2s/
+        vQAADr0BR/uQrQAAGuNJREFUeF7t3Vm2HMeZpVFBBMVMScnM+b/WcGogNYyqAOOwAJIHuNF5uDX7W2s/
         CYxwN/vdTWwu8DdJ3+9//e//83+ZV7ZRkqTbaocJc7ps5y/XXZUk6ft9bocI88v+SpL0x9qhwVqy1ZIk
         XWuHBWvKlkuSdq8dEqwr2y5J2r12SLC2bL0kadfa4cD6sv2SpF1rhwPry/ZLknasHQzsI2MgSdqtdiiw
         j4yBJGm32qHAHjICkqQdawcDe8gISJJ2rB0M7CEjIEnasXYwsIeMgCRpx9rBwD4yBpKknWoHAnvJKEiS
@@ -633,7 +633,7 @@
   <data name="LockedPictureBox.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAAgAAAAIACAYAAAD0eNT6AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        wQAADsEBuJFr7QAAFaBJREFUeF7t3d2uI9d1hVF1t34TyXYM+Cbv/05BHiVXCTucMnSSqd7FQxYPV9X4
+        vwAADr8BOAVTJAAAFaBJREFUeF7t3d2uI9d1hVF1t34TyXYM+Cbv/05BHiVXCTucMnSSqd7FQxYPV9X4
         gHFnwNqLe9cyoJb8naRZ/dd//sd/v6L85UmSpHtqS3aqHEmSJP1eW5hnkONLknSO2jLE/yCQJB2stuzY
         JiOUJOn1a4uM+2W8kiS9Tm1hsZ+MXZKk59cWE8+Xn0OSpP1qC4jXkZ9JkqT7a4uG15efT5Kk22pLhXku
         P+Wn6y8qSdKf1BYIx5GfWZKka21ZcFz52SVJZ60tB87jcgX87QFJOkttEUCuhyTpaLWPPvxfuS6SpAP0
